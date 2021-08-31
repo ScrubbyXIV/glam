@@ -45,8 +45,13 @@ jobs:
       - name: Remove unneeded screenshots
         run: find ./screenshots -type f ! -name "*desktopPage1920*.jpeg" -a ! -name "*desktopPage1280*.jpeg" -a ! -name "iPhone_X*.jpeg" -delete
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+      - name: Rename generated screenshots
+        run: find ./screenshots -type f -name "*.jpeg" | sed -e "s/-.*/.jpeg" | xargs -n2 mv
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
         with:
-          path: screenshots
-          name: screenshots
+          issue: ${{ github.event.pull_request.number }}
+          body: |
+            This is a test comment
+            - With Screenshots ![1920x1080](./screenshots/desktopPage1920x1080.jpeg)
