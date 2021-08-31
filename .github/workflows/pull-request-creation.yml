@@ -46,7 +46,7 @@ jobs:
         run: find ./screenshots -type f ! -name "*desktopPage1920*.jpeg" -a ! -name "*desktopPage1280*.jpeg" -a ! -name "iPhone_X*.jpeg" -delete
 
       - name: Rename generated screenshots
-        run: find ./screenshots -type f -name "*.jpeg" | sed -e "s/-.*/.jpeg" | xargs -n2 mv
+        run: find ./screenshots -type f -name "*.jpeg" | sed -e "s/-.*/.jpeg/" | xargs -n2 mv
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
