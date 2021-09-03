@@ -48,11 +48,23 @@ jobs:
       - name: Rename generated screenshots
         run: find ./screenshots -type f -name "*.jpeg" | sed -e "p;s/-.*/.jpeg/" | xargs -n2 mv
 
-      - name: Upload a picture
+      - name: Upload a 1920x1080 picture
         uses: devicons/public-upload-to-imgur@v2.2.1
-        id: imgur_step
+        id: imgur_1920x1080
         with:
-          path: ./screenshots 
+          path: ./screenshots/*1920x1080* 
+          client_id: ${{secrets.IMGUR_CLIENT_ID}} 
+      - name: Upload a 1280x720 picture
+        uses: devicons/public-upload-to-imgur@v2.2.1
+        id: imgur_1280x720
+        with:
+          path: ./screenshots/*1280x720* 
+          client_id: ${{secrets.IMGUR_CLIENT_ID}} 
+      - name: Upload an iPhone X picture
+        uses: devicons/public-upload-to-imgur@v2.2.1
+        id: imgur_iPhoneX
+        with:
+          path: ./screenshots/*iPhone_X*
           client_id: ${{secrets.IMGUR_CLIENT_ID}} 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
@@ -60,6 +72,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             This is a test comment
-            - ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }} 
-            - ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
-            - ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
+            - ![1920x1080](${{ fromJSON(steps.imgur_1920x1080.outputs.imgur_urls)[0] }})
+            - ![1280x720](${{ fromJSON(steps.imgur_1280x720.outputs.imgur_urls)[0] }})
+            - ![iPhoneX](${{ fromJSON(steps.imgur_iPhoneX.outputs.imgur_urls)[0] }})
