@@ -71,7 +71,6 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            This is a test comment
             ## 1920x1080
             ![1920x1080](${{ fromJSON(steps.imgur_1920x1080.outputs.imgur_urls)[0] }})
             ## 1280x720
