@@ -48,10 +48,20 @@ jobs:
       - name: Rename generated screenshots
         run: find ./screenshots -type f -name "*.jpeg" | sed -e "p;s/-.*/.jpeg/" | xargs -n2 mv
 
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v1
+      - name: Upload a picture
+        uses: devicons/public-upload-to-imgur@v2.2.1
+        id: imgur_step
         with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            This is a test comment
-            - With Screenshots ![1920x1080](./screenshots/desktopPage1920x1080.jpeg)
+          path: ./screenshots 
+          client_id: ${{secrets.IMGUR_CLIENT_ID}} 
+         - name: Create comment
+            uses: peter-evans/create-or-update-comment@v1
+            env:
+
+            with:
+              issue-number: ${{ github.event.pull_request.number }}
+              body: |
+                This is a test comment
+                - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }} 
+                - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[1] }}
+                - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[2] }}
