@@ -54,14 +54,12 @@ jobs:
         with:
           path: ./screenshots 
           client_id: ${{secrets.IMGUR_CLIENT_ID}} 
-         - name: Create comment
-            uses: peter-evans/create-or-update-comment@v1
-            env:
-
-            with:
-              issue-number: ${{ github.event.pull_request.number }}
-              body: |
-                This is a test comment
-                - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }} 
-                - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[1] }}
-                - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[2] }}
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            This is a test comment
+            - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }} 
+            - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[1] }}
+            - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[2] }}
