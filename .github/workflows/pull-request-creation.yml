@@ -60,6 +60,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             This is a test comment
-            - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[0] }} 
-            - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[1] }}
-            - ${{ fromJSON(steps.imgur_step.outputs.imgur_urls)[2] }}
+            - ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[0] }} 
+            - ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[1] }}
+            - ${{ fromJSON(steps.imgur_step.outputs.markdown_urls)[2] }}
